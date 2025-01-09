@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:3000
+
+# Messages
+
+### MessagesControllerGet
+# @name MessagesControllerGet
+GET {{baseUrl}}/messages/
+
+### MessagesControllerGetById
+# @name MessagesControllerGetById
+GET {{baseUrl}}/messages/1
+
+### MessagesControllerPost
+# @name MessagesControllerPost
+POST {{baseUrl}}/messages
+Content-Type: application/json
+
+{
+  "name": "Luiz",
+  "age": 19
+}
+
+### MessagesControllerPut
+# @name MessagesControllerPut
+PUT {{baseUrl}}/messages/1
+
+### MessagesControllerPatch
+# @name MessagesControllerPatch
+PATCH {{baseUrl}}/messages/1
+Content-Type: application/json
+
+{
+  "name": "Luiz",
+  "age": 19
+}
