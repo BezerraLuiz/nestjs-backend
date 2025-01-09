@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller() // Decorator que define a classe como um controlador e a rota.
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {} // Injeção de dependência.
 
   @Get()
   getHello(): string {
