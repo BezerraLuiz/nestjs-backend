@@ -5,9 +5,9 @@
 ### MessagesControllerGet
 # @name MessagesControllerGet
 GET {{baseUrl}}/messages/
-# ?limit=10
-# &offset=10
-# &user=luiz
+?limit=10
+&offset=10
+&user=luiz
 
 ### MessagesControllerGetById
 # @name MessagesControllerGetById
