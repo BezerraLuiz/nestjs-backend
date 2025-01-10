@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -8,14 +9,15 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
 @Controller('messages') // Class decorator
 export class MessagesController {
   @HttpCode(HttpStatus.OK) // Enum value for 200
   @Get('') // Method decorator
-  findAll(): string {
-    return 'All messages';
+  findAll(@Query() pagination: any): string {
+    return 'All messages {} ' + JSON.stringify(pagination);
   }
 
   @HttpCode(200) // Value for 200
@@ -39,6 +41,11 @@ export class MessagesController {
 
   @Put(':id')
   update(@Param('id') id: number): string {
-    return `Update message with ${id}`;
+    return `Update message with id ${id}`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: number): string {
+    return `Remove message with id ${id}`;
   }
 }

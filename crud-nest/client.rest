@@ -5,6 +5,9 @@
 ### MessagesControllerGet
 # @name MessagesControllerGet
 GET {{baseUrl}}/messages/
+# ?limit=10
+# &offset=10
+# &user=luiz
 
 ### MessagesControllerGetById
 # @name MessagesControllerGetById
@@ -33,3 +36,7 @@ Content-Type: application/json
   "name": "Luiz",
   "age": 19
 }
+
+### MessagesControllerDelete
+# @name MessagesControllerDelete
+DELETE {{baseUrl}}/messages/1
