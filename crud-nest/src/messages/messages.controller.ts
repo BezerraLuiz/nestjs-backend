@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -47,7 +48,8 @@ export class MessagesController {
 
   @HttpCode(200)
   @Delete(':id')
-  remove(@Param('id') id: number): string {
+  remove(@Param('id', ParseIntPipe) id: number): string {
+    console.log(id, typeof id);
     return this.messageService.remove(id);
   }
 }

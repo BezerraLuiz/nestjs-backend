@@ -28,8 +28,6 @@ Content-Type: application/json
 
 {
   "text": "Test Update Message",
-  "from": "Luiz",
-  "to": "Luiz"
 }
 
 ### MessagesControllerDelete
