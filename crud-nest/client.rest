@@ -18,21 +18,20 @@ Content-Type: application/json
 {
   "text": "Test Create Message",
   "from": "Luiz",
-  "to": "Luiz",
+  "to": "Luiz"
 }
 
 ### MessagesControllerPatch
 # @name MessagesControllerPatch
-PATCH {{baseUrl}}/messages/4
+PATCH {{baseUrl}}/messages/1
 Content-Type: application/json
 
 {
   "text": "Test Update Message",
   "from": "Luiz",
-  "to": "Luiz",
-  "read": false
+  "to": "Luiz"
 }
 
 ### MessagesControllerDelete
 # @name MessagesControllerDelete
-DELETE {{baseUrl}}/messages/2
+DELETE {{baseUrl}}/messages/1

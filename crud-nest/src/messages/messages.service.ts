@@ -8,6 +8,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { Message } from './entities/recado.entity';
+import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Injectable()
 export class MessagesService {
@@ -37,12 +39,12 @@ export class MessagesService {
     return message;
   }
 
-  createMessage(body: Message): Message {
+  createMessage(createMessageDto: CreateMessageDto): Message {
     this.lastId++;
     const id = this.lastId;
     const newMessage: Message = {
       id,
-      ...body,
+      ...createMessageDto,
       read: false,
       date: new Date(),
     };
@@ -52,7 +54,7 @@ export class MessagesService {
     return newMessage;
   }
 
-  update(id: number, body: Message): Message {
+  update(id: number, updateMessageDto: UpdateMessageDto): Message {
     const indexMessage = this.messages.findIndex((item) => item.id == id);
 
     if (indexMessage < 0) {
@@ -64,7 +66,7 @@ export class MessagesService {
 
       return (this.messages[indexMessage] = {
         ...message,
-        ...body,
+        ...updateMessageDto,
       });
     }
   }

@@ -8,11 +8,11 @@ import {
   Param,
   Patch,
   Post,
-  Put,
-  Query,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { Message } from './entities/recado.entity';
+import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Controller('messages') // Class decorator
 export class MessagesController {
@@ -32,14 +32,17 @@ export class MessagesController {
 
   @HttpCode(201)
   @Post('')
-  create(@Body() body: Message): object {
-    return this.messageService.createMessage(body);
+  create(@Body() createMessageDto: CreateMessageDto): object {
+    return this.messageService.createMessage(createMessageDto);
   }
 
   @HttpCode(200)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() body: any): object {
-    return this.messageService.update(id, body);
+  update(
+    @Param('id') id: number,
+    @Body() updateMessageDto: UpdateMessageDto,
+  ): object {
+    return this.messageService.update(id, updateMessageDto);
   }
 
   @HttpCode(200)
