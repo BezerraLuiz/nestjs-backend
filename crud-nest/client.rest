@@ -5,13 +5,10 @@
 ### MessagesControllerGet
 # @name MessagesControllerGet
 GET {{baseUrl}}/messages/
-?limit=10
-&offset=10
-&user=luiz
 
 ### MessagesControllerGetById
 # @name MessagesControllerGetById
-GET {{baseUrl}}/messages/1
+GET {{baseUrl}}/messages/3
 
 ### MessagesControllerPost
 # @name MessagesControllerPost
@@ -19,24 +16,23 @@ POST {{baseUrl}}/messages
 Content-Type: application/json
 
 {
-  "name": "Luiz",
-  "age": 19
+  "text": "Test Create Message",
+  "from": "Luiz",
+  "to": "Luiz",
 }
-
-### MessagesControllerPut
-# @name MessagesControllerPut
-PUT {{baseUrl}}/messages/1
 
 ### MessagesControllerPatch
 # @name MessagesControllerPatch
-PATCH {{baseUrl}}/messages/1
+PATCH {{baseUrl}}/messages/4
 Content-Type: application/json
 
 {
-  "name": "Luiz",
-  "age": 19
+  "text": "Test Update Message",
+  "from": "Luiz",
+  "to": "Luiz",
+  "read": false
 }
 
 ### MessagesControllerDelete
 # @name MessagesControllerDelete
-DELETE {{baseUrl}}/messages/1
+DELETE {{baseUrl}}/messages/2
