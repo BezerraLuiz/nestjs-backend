@@ -8,7 +8,7 @@ GET {{baseUrl}}/messages/
 
 ### MessagesControllerGetById
 # @name MessagesControllerGetById
-GET {{baseUrl}}/messages/3
+GET {{baseUrl}}/messages/2
 
 ### MessagesControllerPost
 # @name MessagesControllerPost
@@ -27,7 +27,7 @@ PATCH {{baseUrl}}/messages/1
 Content-Type: application/json
 
 {
-  "text": "Test Update Message",
+  "to": "Karoline"
 }
 
 ### MessagesControllerDelete

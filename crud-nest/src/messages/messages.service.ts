@@ -7,78 +7,68 @@ import {
   Param,
   Query,
 } from '@nestjs/common';
-import { Message } from './entities/recado.entity';
+import { Message } from './entities/message.entity';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MessagesService {
-  private lastId = 1;
-  private messages: Message[] = [
-    {
-      id: 1,
-      text: 'Test Message',
-      from: 'Luiz',
-      to: 'Luiz',
-      read: false,
-      date: new Date(),
-    },
-  ];
+  constructor(
+    @InjectRepository(Message)
+    private readonly messageRepository: Repository<Message>,
+  ) {}
 
-  findAll(): Message[] {
-    return this.messages;
+  async findAll(): Promise<Message[]> {
+    const messages = await this.messageRepository.find();
+
+    return messages;
   }
 
-  findOne(id: number): Message {
-    const message = this.messages.find((item) => item.id == id);
-
-    if (!message) {
-      throw new NotFoundException('Message not found');
-    }
+  async findOne(id: number): Promise<Message> {
+    const message = await this.messageRepository.findOne({
+      where: { id },
+    });
 
     return message;
   }
 
-  createMessage(createMessageDto: CreateMessageDto): Message {
-    this.lastId++;
-    const id = this.lastId;
-    const newMessage: Message = {
-      id,
+  async createMessage(createMessageDto: CreateMessageDto): Promise<Message> {
+    const newMessage = {
       ...createMessageDto,
       read: false,
       date: new Date(),
     };
 
-    this.messages.push(newMessage);
+    const message = this.messageRepository.create(newMessage);
 
-    return newMessage;
+    await this.messageRepository.save(message);
+
+    return message;
   }
 
-  update(id: number, updateMessageDto: UpdateMessageDto): Message {
-    const indexMessage = this.messages.findIndex((item) => item.id == id);
+  async update(id: number, updateMessageDto: UpdateMessageDto) {
+    const message = await this.messageRepository.preload({
+      id,
+      ...updateMessageDto,
+    });
 
-    if (indexMessage < 0) {
-      throw new NotFoundException('Message not exists');
-    }
+    if (!message) throw new HttpException('Message dont exist', 404);
 
-    if (indexMessage >= 0) {
-      const message = this.messages[indexMessage];
+    await this.messageRepository.save(message);
 
-      return (this.messages[indexMessage] = {
-        ...message,
-        ...updateMessageDto,
-      });
-    }
+    return message;
   }
 
-  remove(id: number) {
-    const indexMessage = this.messages.findIndex((item) => item.id == id);
+  async remove(id: number) {
+    const message = await this.messageRepository.findOneBy({
+      id,
+    });
 
-    if (indexMessage < 0) {
-      throw new NotFoundException('Message not exists');
-    }
+    if (!message) throw new HttpException('Message dont exist', 404);
 
-    if (indexMessage >= 0) this.messages.splice(indexMessage, 1);
+    this.messageRepository.remove(message);
 
     return `Remove message with id ${id}`;
   }

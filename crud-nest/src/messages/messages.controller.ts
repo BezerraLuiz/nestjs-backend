@@ -11,7 +11,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
-import { Message } from './entities/recado.entity';
+import { Message } from './entities/message.entity';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 
@@ -21,13 +21,13 @@ export class MessagesController {
 
   @HttpCode(HttpStatus.OK) // Enum value for 200
   @Get('') // Method decorator
-  findAll(): Message[] {
+  async findAll(): Promise<Message[]> {
     return this.messageService.findAll();
   }
 
   @HttpCode(200) // Value for 200
   @Get(':id') // Param decorator
-  findOne(@Param('id') id: number): Message {
+  findOne(@Param('id') id: number): Promise<Message> {
     return this.messageService.findOne(id);
   }
 
@@ -40,15 +40,15 @@ export class MessagesController {
   @HttpCode(200)
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateMessageDto: UpdateMessageDto,
-  ): object {
+  ) {
     return this.messageService.update(id, updateMessageDto);
   }
 
   @HttpCode(200)
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): string {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<string> {
     console.log(id, typeof id);
     return this.messageService.remove(id);
   }
