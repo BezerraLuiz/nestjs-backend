@@ -22,19 +22,34 @@ let UsersService = class UsersService {
         this.userRepository = userRepository;
     }
     async create(body) {
-        const userData = {
-            ...body,
-            passwordHash: body.password,
-        };
-        const user = this.userRepository.create(userData);
-        await this.userRepository.save(user);
-        return user;
+        try {
+            const allUsers = await this.findAll();
+            const existUser = allUsers.some((user) => user.mail == body.mail);
+            if (existUser) {
+                throw new common_1.HttpException('Mail has already registered', common_1.HttpStatus.CONFLICT);
+            }
+            const userData = {
+                ...body,
+                passwordHash: body.password,
+            };
+            const user = this.userRepository.create(userData);
+            await this.userRepository.save(user);
+            return user;
+        }
+        catch (error) {
+            console.log('Error: ', error);
+            throw new common_1.HttpException('Internal server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     async findAll() {
-        return `This action returns all users`;
+        return this.userRepository.find();
     }
     async findOne(id) {
-        return `This action returns a #${id} user`;
+        return this.userRepository.findOne({
+            where: {
+                id,
+            },
+        });
     }
     async update(id, updateUserDto) {
         return `This action updates a #${id} user`;

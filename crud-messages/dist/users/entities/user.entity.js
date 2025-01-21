@@ -24,7 +24,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ unique: true }),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], User.prototype, "mail", void 0);

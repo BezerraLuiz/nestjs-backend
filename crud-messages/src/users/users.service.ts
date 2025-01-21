@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -12,24 +12,53 @@ export class UsersService {
   ) {}
 
   async create(body: CreateUserDto): Promise<User> {
-    const userData = {
-      ...body,
-      passwordHash: body.password,
-    };
+    try {
+      // Verify mail in use
+      const allUsers = await this.findAll();
 
-    const user: User = this.userRepository.create(userData);
+      const existUser: boolean = allUsers.some(
+        (user) => user.mail == body.mail,
+      );
 
-    await this.userRepository.save(user);
+      if (existUser) {
+        throw new HttpException(
+          'Mail has already registered',
+          HttpStatus.CONFLICT,
+        );
+      }
 
-    return user;
+      // If mail dont in use, create new user
+
+      const userData = {
+        ...body,
+        passwordHash: body.password,
+      };
+
+      const user: User = this.userRepository.create(userData);
+
+      await this.userRepository.save(user);
+
+      return user;
+    } catch (error) {
+      console.log('Error: ', error);
+
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  async findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<User> {
+    return this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
