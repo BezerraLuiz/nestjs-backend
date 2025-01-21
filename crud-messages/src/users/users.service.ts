@@ -54,11 +54,11 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<User> {
-    return this.userRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const user = this.userRepository.findOneBy({ id });
+
+    if (!user) throw new HttpException('User dont exist', 404);
+
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -66,6 +66,10 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} user`;
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) throw new HttpException('User dont exist', 404);
+
+    return this.userRepository.remove(user);
   }
 }
