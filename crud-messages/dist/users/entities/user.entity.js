@@ -9,43 +9,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Message = void 0;
+exports.User = void 0;
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
-let Message = class Message {
+let User = class User {
 };
-exports.Message = Message;
+exports.User = User;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Message.prototype, "id", void 0);
+], User.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
+    (0, typeorm_1.Column)({ length: 100 }),
     __metadata("design:type", String)
-], Message.prototype, "text", void 0);
+], User.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar' }),
+    (0, typeorm_1.Column)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], Message.prototype, "from", void 0);
+], User.prototype, "mail", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar' }),
-    (0, class_validator_1.IsEmail)(),
+    (0, typeorm_1.Column)({ length: 255 }),
     __metadata("design:type", String)
-], Message.prototype, "to", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
-    __metadata("design:type", Boolean)
-], Message.prototype, "read", void 0);
+], User.prototype, "passwordHash", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Message.prototype, "createdAt", void 0);
+], User.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Message.prototype, "updatedA", void 0);
-exports.Message = Message = __decorate([
+], User.prototype, "updateAt", void 0);
+exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
-], Message);
-//# sourceMappingURL=messages.entity.js.map
+], User);
+//# sourceMappingURL=user.entity.js.map

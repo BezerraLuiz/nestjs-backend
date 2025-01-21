@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MessagesModule } from 'src/messages/messages.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MessagesModule } from 'src/messages/messages.module';
       synchronize: true, // Synchronize with database. Dont use in production.
     }),
     MessagesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

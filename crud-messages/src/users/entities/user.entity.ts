@@ -8,27 +8,23 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Message {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  text: string;
+  @Column({ length: 100 })
+  name: string;
 
-  @Column({ type: 'varchar' })
+  @Column()
   @IsEmail()
-  from: string;
+  mail: string;
 
-  @Column({ type: 'varchar' })
-  @IsEmail()
-  to: string;
-
-  @Column({ type: 'boolean', default: false })
-  read: boolean;
+  @Column({ length: 255 })
+  passwordHash: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
-  updatedA: Date;
+  updateAt: Date;
 }
