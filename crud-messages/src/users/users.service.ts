@@ -34,7 +34,7 @@ export class UsersService {
         passwordHash: body.password,
       };
 
-      const user: User = this.userRepository.create(userData);
+      const user = this.userRepository.create(userData);
 
       await this.userRepository.save(user);
 
@@ -61,11 +61,25 @@ export class UsersService {
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, body: UpdateUserDto): Promise<User> {
+    const userData = {
+      ...body,
+      passwordHash: body.password,
+    };
+
+    const user = await this.userRepository.preload({
+      id,
+      ...userData,
+    });
+
+    if (!user) throw new HttpException('User dont exist', 404);
+
+    this.userRepository.save(user);
+
+    return user;
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<User> {
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) throw new HttpException('User dont exist', 404);

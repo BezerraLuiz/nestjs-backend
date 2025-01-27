@@ -45,17 +45,30 @@ let UsersService = class UsersService {
         return this.userRepository.find();
     }
     async findOne(id) {
-        return this.userRepository.findOne({
-            where: {
-                id,
-            },
-        });
+        const user = this.userRepository.findOneBy({ id });
+        if (!user)
+            throw new common_1.HttpException('User dont exist', 404);
+        return user;
     }
-    async update(id, updateUserDto) {
-        return `This action updates a #${id} user`;
+    async update(id, body) {
+        const userData = {
+            ...body,
+            passwordHash: body.password,
+        };
+        const user = await this.userRepository.preload({
+            id,
+            ...userData,
+        });
+        if (!user)
+            throw new common_1.HttpException('User dont exist', 404);
+        this.userRepository.save(user);
+        return user;
     }
     async remove(id) {
-        return `This action removes a #${id} user`;
+        const user = await this.userRepository.findOneBy({ id });
+        if (!user)
+            throw new common_1.HttpException('User dont exist', 404);
+        return this.userRepository.remove(user);
     }
 };
 exports.UsersService = UsersService;
