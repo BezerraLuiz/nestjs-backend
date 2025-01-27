@@ -1,3 +1,4 @@
+import { Message } from 'src/messages/entities/messages.entity';
 export declare class User {
     id: number;
     name: string;
@@ -5,4 +6,6 @@ export declare class User {
     passwordHash: string;
     createdAt: Date;
     updateAt: Date;
+    sentMessages: Message[];
+    receivedMessages: Message[];
 }

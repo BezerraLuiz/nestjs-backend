@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Message = void 0;
 const class_validator_1 = require("class-validator");
+const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
 let Message = class Message {
 };
@@ -24,12 +25,14 @@ __decorate([
     __metadata("design:type", String)
 ], Message.prototype, "text", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
+    (0, typeorm_1.JoinColumn)({ name: 'from' }),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], Message.prototype, "from", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
+    (0, typeorm_1.JoinColumn)({ name: 'to' }),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], Message.prototype, "to", void 0);

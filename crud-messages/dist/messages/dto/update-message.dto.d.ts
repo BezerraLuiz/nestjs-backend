@@ -1,5 +1,6 @@
-export declare class UpdateMessageDto {
-    readonly text: string;
-    readonly from: string;
-    readonly to: string;
+import { CreateMessageDto } from './create-message.dto';
+declare const UpdateMessageDto_base: import("@nestjs/mapped-types").MappedType<Partial<CreateMessageDto>>;
+export declare class UpdateMessageDto extends UpdateMessageDto_base {
+    readonly read: string;
 }
+export {};

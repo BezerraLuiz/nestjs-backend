@@ -5,11 +5,11 @@ export class CreateMessageDto {
   @IsNotEmpty()
   readonly text: string;
 
-  @IsString()
-  @IsNotEmpty()
-  readonly from: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // readonly from: string;
 
-  @IsString()
-  @IsNotEmpty()
-  readonly to: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // readonly to: string;
 }

@@ -10,26 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateMessageDto = void 0;
+const mapped_types_1 = require("@nestjs/mapped-types");
 const class_validator_1 = require("class-validator");
-class UpdateMessageDto {
+const create_message_dto_1 = require("./create-message.dto");
+class UpdateMessageDto extends (0, mapped_types_1.PartialType)(create_message_dto_1.CreateMessageDto) {
 }
 exports.UpdateMessageDto = UpdateMessageDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], UpdateMessageDto.prototype, "text", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], UpdateMessageDto.prototype, "from", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], UpdateMessageDto.prototype, "to", void 0);
+], UpdateMessageDto.prototype, "read", void 0);
 //# sourceMappingURL=update-message.dto.js.map
